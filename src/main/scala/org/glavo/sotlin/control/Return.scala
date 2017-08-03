@@ -1,4 +1,4 @@
-package org.glavo.sotlin
+package org.glavo.sotlin.control
 
 import scala.util.control.ControlThrowable
 
@@ -13,9 +13,7 @@ object Return {
     def apply[R](tag: Symbol)(value: R): Nothing =
         throw ReturnControl(tag, value)
 
-    @inline
-    implicit class ImplF0[R](val f: () => R) {
-        @unchecked
+    implicit class ImplF0[R](val f: () => R) extends AnyVal {
         def tag(tag: Symbol): () => R = () => {
             try f() catch {
                 case ReturnControl(`tag`, v: R) => v
@@ -23,14 +21,11 @@ object Return {
         }
     }
 
-    @inline
-    implicit class ImplF1[A, R](val f: (A) => R) {
-        @unchecked
+    implicit class ImplF1[A, R](val f: (A) => R) extends AnyVal {
         def tag(tag: Symbol): (A) => R = (a) => {
             try f(a) catch {
                 case ReturnControl(`tag`, v: R) => v
             }
-            
         }
     }
 

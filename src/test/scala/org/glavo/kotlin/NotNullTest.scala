@@ -1,4 +1,4 @@
-package org.glavo.sotlin
+package org.glavo.kotlin
 
 /**
   * Created by Glavo on 17-8-3.
@@ -7,15 +7,12 @@ package org.glavo.sotlin
   * @since 0.1.0
   */
 object NotNullTest {
-    def test[A](a: A)(implicit nn: NotNull[a.type]): A = a
+    def test[A <: AnyRef](a: A)(implicit nn: NotNull[a.type]): A = a
 
     def main(args: Array[String]): Unit = {
         val a: String = ""
-
-        implicit val anonnull = NotNull(a)
+        implicit val anotnull = NotNull(a)
 
         test(a)
-
-
     }
 }

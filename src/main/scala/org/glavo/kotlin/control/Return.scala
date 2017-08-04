@@ -1,4 +1,4 @@
-package org.glavo.sotlin.control
+package org.glavo.kotlin.control
 
 import scala.util.control.ControlThrowable
 
@@ -16,7 +16,7 @@ object Return {
     implicit class ImplF0[R](val f: () => R) extends AnyVal {
         def tag(tag: Symbol): () => R = () => {
             try f() catch {
-                case ReturnControl(`tag`, v: R) => v
+                case ReturnControl(`tag`, v: R)  => v
             }
         }
     }
